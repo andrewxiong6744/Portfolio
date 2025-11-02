@@ -22,7 +22,7 @@ function AppContent() {
 
   return (
     <div
-      className="min-h-screen transition-all duration-1000 relative overflow-hidden"
+      className="w-screen h-screen min-h-screen transition-all duration-1000 relative overflow-hidden"
       style={{ backgroundColor: "#000000" }}
     >
       {/* Dynamic background based on album art - Material U style */}
@@ -64,7 +64,7 @@ function AppContent() {
       />
 
       {/* Portfolio Content - Always visible as background */}
-      <div className="relative z-0">
+      <div className="absolute inset-0 z-0">
         <PortfolioContent />
       </div>
 
@@ -122,7 +122,9 @@ function AppContent() {
                       ? "none"
                       : "blur(20px)",
                   transition:
-                    "background-color 300ms ease-out, backdrop-filter 300ms ease-out",
+                    isMinimized
+                      ? "background-color 0ms, backdrop-filter 0ms"
+                      : "background-color 300ms ease-out, backdrop-filter 300ms ease-out",
                 }}
               >
                 {/* Gramophone Section with enhanced ambient lighting */}
