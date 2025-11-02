@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
-import imgGeneratedImageNovember012025824Pm1 from "@/assets/frame1.png";
+import imgGeneratedImageNovember012025824Pm1 from "../assets/Frame1.png";
 
 
 // Interactive outline component with hover effects
