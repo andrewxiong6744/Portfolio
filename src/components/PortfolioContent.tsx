@@ -374,53 +374,49 @@ export function PortfolioContent() {
   };
 
   return (
-  <div className="w-full h-full min-h-screen relative overflow-hidden">
-    {/* Full-screen background */}
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <img
-        alt="Portfolio Background"
-        src={bgImage}
-        className="w-full h-full object-cover"
-      />
+  <div className="relative w-screen h-screen overflow-hidden">
+    {/* Full-screen image background */}
+    <img
+      alt="Portfolio Background"
+      src={bgImage}
+      className="absolute inset-0 w-full h-full object-cover"
+      style={{
+        objectPosition: "center",
+      }}
+    />
+
+    {/* Aligned overlay layer */}
+    <div
+      className="absolute top-1/2 left-1/2 origin-center"
+      style={{
+        width: "1440px",
+        height: "1024px",
+        transform: "translate(-50%, -50%) scale(var(--scale))",
+      }}
+    >
+      <NameOutline onClick={handleNameClick} />
+      <MatchaOutline onClick={handleMatchaClick} />
+      <FlowerOutline onClick={handleFlowerClick} />
+      <MusicOutline onClick={handleMusicClick} />
+      <ProjectsOutline onClick={handleProjectsClick} />
+      <CatOutline onClick={handleCatClick} />
     </div>
 
-    {/* Scaled outline container (maintains 1440x1024 aspect ratio) */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div
-        className="relative"
-        style={{
-          width: "1440px",
-          height: "1024px",
-          transform: "scale(var(--scale))",
-          transformOrigin: "top left",
-        }}
-      >
-        {/* All your outlines inside this container */}
-        <NameOutline onClick={handleNameClick} />
-        <MatchaOutline onClick={handleMatchaClick} />
-        <FlowerOutline onClick={handleFlowerClick} />
-        <MusicOutline onClick={handleMusicClick} />
-        <ProjectsOutline onClick={handleProjectsClick} />
-        <CatOutline onClick={handleCatClick} />
-      </div>
-    </div>
-
-    {/* Responsive scaling script */}
-    <script dangerouslySetInnerHTML={{
-      __html: `
-        function updateScale() {
-          const baseWidth = 1440;
-          const baseHeight = 1024;
-          const scaleX = window.innerWidth / baseWidth;
-          const scaleY = window.innerHeight / baseHeight;
-          const scale = Math.min(scaleX, scaleY);
-          document.documentElement.style.setProperty('--scale', scale);
-        }
-        updateScale();
-        window.addEventListener('resize', updateScale);
-      `
-    }} />
+    {/* Shared scaling logic */}
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          function updateScale() {
+            const baseWidth = 1440;
+            const baseHeight = 1024;
+            const scale = Math.max(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
+            document.documentElement.style.setProperty('--scale', scale);
+          }
+          updateScale();
+          window.addEventListener('resize', updateScale);
+        `,
+      }}
+    />
   </div>
 );
-
 }
