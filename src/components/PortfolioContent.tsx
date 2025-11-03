@@ -205,19 +205,19 @@ export function PortfolioContent() {
     <div className="w-full h-full min-h-screen flex items-center justify-center">
       {/* Full Page Interactive Portfolio - Scaled Container */}
       <div className="portfolio-scaled-container">
-        <div className="bg-white relative size-full" data-name="Landing page">
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <img alt="Portfolio Background" className="absolute inset-0 size-full object-cover" src={imgGeneratedImageNovember012025824Pm1} />
+          <div className="bg-white relative size-full" data-name="Landing page">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <img alt="Portfolio Background" className="absolute inset-0 size-full object-cover" src={imgGeneratedImageNovember012025824Pm1} />
+            </div>
           </div>
-        </div>
-        <NameOutline onClick={handleNameClick} />
-        <MatchaOutline onClick={handleMatchaClick} />
-        <FlowerOutline onClick={handleFlowerClick} />
-        <MusicOutline onClick={handleMusicClick} />
-        <ProjectsOutline onClick={handleProjectsClick} />
-        <CatOutline onClick={handleCatClick} />
-       </div>
-    </div>
+          <NameOutline onClick={handleNameClick} />
+          <MatchaOutline onClick={handleMatchaClick} />
+          <FlowerOutline onClick={handleFlowerClick} />
+          <MusicOutline onClick={handleMusicClick} />
+          <ProjectsOutline onClick={handleProjectsClick} />
+          <CatOutline onClick={handleCatClick} />
+         </div>
+      </div>
       
       <style jsx>{`
         .portfolio-scaled-container {
