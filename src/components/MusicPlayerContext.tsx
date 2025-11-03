@@ -9,7 +9,7 @@ import React, {
 // 🔊 Background ambient sound setup
 const backgroundAudio = new Audio('/music/Bird Chirping Sound Effect.mp3');
 backgroundAudio.loop = true;
-backgroundAudio.volume = 0.15; // 👈 very quiet ambient volume
+backgroundAudio.volume = 0.3; // 👈 very quiet ambient volume
 
 interface Song {
   id: string;
