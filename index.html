@@ -22,7 +22,7 @@
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);            /* center on spawn point */
-    animation: coinJump 550ms ease-out forwards;  /* tweak duration as you like */
+    animation: coinJump 700ms ease-out forwards;  /* tweak duration as you like */
     /* Per-coin custom arc via CSS variables set in JS */
     --dx: 0px;   /* horizontal offset at peak */
     --dy: -30px; /* vertical offset at peak (negative = up) */
@@ -38,7 +38,7 @@
 
 <script>
   // Distance in pixels between coins (larger = fewer coins)
-  const COIN_SPACING = 85;
+  const COIN_SPACING = 100;
 
   let lastX = null, lastY = null;
   let carry = 0; // leftover distance from previous segment
