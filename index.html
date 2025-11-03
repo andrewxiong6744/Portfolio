@@ -13,47 +13,77 @@
     </body>
   </html>
 
-  <style>
-  /* Coin trail style */
+ <style>
   .coin-trail {
     position: fixed;
     width: 40px;
     height: 40px;
     pointer-events: none;
     z-index: 9999;
-    animation: fadeOut 1s forwards ease-out;
     transform: translate(-50%, -50%);
+    animation: fadeOut 1s ease-out forwards;
   }
-
   @keyframes fadeOut {
-    from {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    to {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
-    }
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
   }
 </style>
 
 <script>
-  let lastSpawn = 0;
-  const spawnInterval = 150; // 👈 milliseconds between each coin (higher = fewer coins)
+  // Distance (in px) between coins. Larger = fewer coins.
+  const COIN_SPACING = 70;
 
-  document.addEventListener('mousemove', (e) => {
-    const now = Date.now();
-    if (now - lastSpawn < spawnInterval) return; // limit spawn rate
-    lastSpawn = now;
+  let lastX = null, lastY = null;
+  let carry = 0; // leftover distance from previous segment
 
+  function spawnCoin(x, y) {
     const coin = document.createElement('img');
-    coin.src = '/mariocoin_40x40.gif'; // path to your GIF in /public/
+    coin.src = '/mariocoin_40x40.gif';
     coin.className = 'coin-trail';
-    coin.style.left = `${e.pageX}px`;
-    coin.style.top = `${e.pageY}px`;
+    coin.style.left = `${x}px`;
+    coin.style.top  = `${y}px`;
     document.body.appendChild(coin);
-
-    // remove coin after fade
     setTimeout(() => coin.remove(), 1000);
+  }
+
+  // Use pointermove so it works with touch/pen too
+  window.addEventListener('pointermove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    if (lastX == null) {
+      lastX = x; lastY = y;
+      spawnCoin(x, y); // first coin
+      return;
+    }
+
+    const dx = x - lastX;
+    const dy = y - lastY;
+    const dist = Math.hypot(dx, dy);
+    if (dist === 0) return;
+
+    // How far along this segment until the next coin?
+    let remaining = carry + dist;
+
+    // Place coins at fixed spacing along the segment
+    while (remaining >= COIN_SPACING) {
+      const t = (COIN_SPACING - carry) / dist; // 0..1 along this segment
+      const cx = lastX + dx * t;
+      const cy = lastY + dy * t;
+      spawnCoin(cx, cy);
+
+      remaining -= COIN_SPACING;
+      // Move the segment start forward to where we just spawned
+      lastX = cx;
+      lastY = cy;
+      // Reset carry because we just spawned exactly at spacing
+      carry = 0;
+    }
+
+    // Save leftover distance to carry into the next move
+    carry = remaining;
+    // Update last position to current
+    lastX = x;
+    lastY = y;
   });
 </script>
