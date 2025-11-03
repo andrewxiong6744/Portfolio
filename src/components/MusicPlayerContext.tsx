@@ -124,7 +124,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     isPlaying: false,
     currentTime: 0,
     duration: 0,
-    volume: 0.25, // 👈 default volume = 50%
+    volume: 0.20, // 👈 default volume = 50%
     isLooping: false,
     isShuffling: false,
     darkMode: false,
