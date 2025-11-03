@@ -42,14 +42,14 @@ export function SpotifyPlaylist() {
               style={{
                 backgroundColor: `${dominantColor}25`,
                 borderColor: `${dominantColor}25`,
-                color: dominantColor
+                color: '#ffffff'
               }}
             >
               <div className="flex items-center justify-center gap-4 w-full">
-                <Music2 className="w-7 h-7 animate-pulse" />
+                <Music2 className="w-7 h-7 animate-pulse" style={{ color: '#ffffff' }} />
                 <div className="flex flex-col items-start">
-                  <span className="text-base">Choose a Song</span>
-                  <span className="text-xs opacity-70">{playlist.length} tracks available</span>
+                  <span className="text-base" style={{ color: '#ffffff', fontWeight: '600' }}>Choose a Song</span>
+                  <span className="text-xs" style={{ color: '#e0e0e0', opacity: '0.9' }}>{playlist.length} tracks available</span>
                 </div>
               </div>
             </Button>
