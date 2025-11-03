@@ -76,7 +76,7 @@ const mockSongs: Song[] = [
     title: "the way things go",
     artist: "beabadoobee",
     album: "Beatopia",
-    duration: 203,
+    duration: 190,
     coverUrl: cover("Beabadoobee Album Cover.jpeg"),
     audioUrl: audio("beabadoobee - the way things go.mp3"),
     primaryColor: "#BEBDBF",
