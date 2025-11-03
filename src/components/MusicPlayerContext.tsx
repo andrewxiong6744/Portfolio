@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 
 interface Song {
   id: string;
@@ -44,70 +50,81 @@ interface MusicPlayerContextType extends MusicPlayerState {
   expandPlayer: () => void;
 }
 
-const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(undefined);
+const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(
+  undefined
+);
 
-// Mock song data with Material U colors
-// Note: audioUrl is empty - to enable real audio playback, add actual audio file URLs here
-// You can use Spotify preview URLs, SoundCloud links, or your own hosted audio files
+// helper to make URLs for files with spaces
+const cover = (name: string) => `/covers/${encodeURIComponent(name)}`;
+const audio = (name: string) => `/music/${encodeURIComponent(name)}`;
+
+// IMPORTANT: these names must match what’s in your screenshot
 const mockSongs: Song[] = [
   {
-    id: '1',
-    title: 'A Couple Minutes',
-    artist: 'Olivia Dean',
-    album: 'The Art of Loving',
+    id: "1",
+    title: "A Couple Minutes",
+    artist: "Olivia Dean",
+    album: "The Art of Loving",
     duration: 212,
-    coverUrl: '/public/covers/Olivia Dean Album Cover.png',
-    audioUrl: '/public/music/Olivia Dean - A Couple Minutes (Lyric Video).mp3', // Add your audio URL here to enable playback
-    primaryColor: '#404040',
-    secondaryColor: '#BFBFBF'
+    // was: /public/covers/...
+    coverUrl: cover("Olivia Dean Album Cover.png"),
+    // was: /public/music/...
+    audioUrl: audio("Olivia Dean - A Couple Minutes (Lyric Video).mp3"),
+    primaryColor: "#404040",
+    secondaryColor: "#BFBFBF",
   },
   {
-    id: '2',
-    title: 'The Way Things Go',
-    artist: 'beabadoobee',
-    album: 'Beatopia',
+    id: "2",
+    title: "the way things go",
+    artist: "beabadoobee",
+    album: "Beatopia",
     duration: 203,
-    coverUrl: '/public/covers/Beabadoobee Album Cover.jpeg',
-    audioUrl: '/public/music/beabadoobee - the way things go.mp3',
-    primaryColor: '#BEBDBF',
-    secondaryColor: '#A58169'
+    coverUrl: cover("Beabadoobee Album Cover.jpeg"),
+    audioUrl: audio("beabadoobee - the way things go.mp3"),
+    primaryColor: "#BEBDBF",
+    secondaryColor: "#A58169",
   },
   {
-    id: '3',
-    title: 'Soft Spot',
-    artist: 'Keshi',
-    album: 'GABRIEL',
+    id: "3",
+    title: "Soft Spot",
+    artist: "keshi",
+    album: "GABRIEL",
     duration: 204,
-    coverUrl: '/public/covers/Keshi Album Cover.jpeg',
-    audioUrl: '/public/music/keshi - Soft Spot (Official Music Video).mp3',
-    primaryColor: '#262621',
-    secondaryColor: '#BFBAA8'
+    coverUrl: cover("Keshi Album Cover.jpeg"),
+    audioUrl: audio("keshi - Soft Spot (Official Music Video).mp3"),
+    primaryColor: "#262621",
+    secondaryColor: "#BFBAA8",
   },
   {
-    id: '4',
-    title: 'Falling Behind',
-    artist: 'Laufey',
-    album: 'Everything I Know About Love',
+    id: "4",
+    title: "Falling Behind",
+    artist: "Laufey",
+    album: "Everything I Know About Love",
     duration: 174,
-    coverUrl: '/public/covers/Laufey Album Cover.jpeg',
-    audioUrl: '/public/music/Laufey - Falling Behind (Official Audio).mp3',
-    primaryColor: '#939848',
-    secondaryColor: '#324F17'
+    coverUrl: cover("Laufey Album Cover.jpeg"),
+    audioUrl: audio("Laufey - Falling Behind (Official Audio).mp3"),
+    primaryColor: "#939848",
+    secondaryColor: "#324F17",
   },
   {
-    id: '5',
-    title: 'Superposition',
-    artist: 'Daniel Caesar',
-    album: 'Freudian',
+    id: "5",
+    title: "Blessed",
+    artist: "Daniel Caesar",
+    album: "Freudian",
     duration: 241,
-    coverUrl: '/public/covers/Daniel Caesar Album Cover.avif',
-    audioUrl: '/public/music/Blessed.mp3',
-    primaryColor: '#b7ccd4',
-    secondaryColor: '#78a2b7'
-  }
+    coverUrl: cover("Daniel Caesar Album Cover.avif"),
+    // I saw “Blessed.mp3” in your music folder
+    audioUrl: audio("Blessed.mp3"),
+    primaryColor: "#b7ccd4",
+    secondaryColor: "#78a2b7",
+  },
 ];
 
-export function MusicPlayerProvider({ children }: { children: React.ReactNode }) {
+export function MusicPlayerProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [state, setState] = useState<MusicPlayerState>({
     currentSong: mockSongs[0],
     playlist: mockSongs,
@@ -118,129 +135,101 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     isLooping: false,
     isShuffling: false,
     darkMode: false,
-    dominantColor: mockSongs[0].primaryColor || '#6750A4',
-    accentColor: mockSongs[0].secondaryColor || '#E8DEF8',
+    dominantColor: mockSongs[0].primaryColor || "#6750A4",
+    accentColor: mockSongs[0].secondaryColor || "#E8DEF8",
     isMinimized: false,
-    isTransitioning: false
+    isTransitioning: false,
   });
 
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize audio element
+  // create audio element once
   useEffect(() => {
     const audio = new Audio();
     audioRef.current = audio;
 
-    audio.addEventListener('timeupdate', () => {
-      setState(prev => ({ ...prev, currentTime: Math.floor(audio.currentTime) }));
-    });
+    const onTimeUpdate = () => {
+      setState((prev) => ({
+        ...prev,
+        currentTime: Math.floor(audio.currentTime),
+      }));
+    };
 
-    audio.addEventListener('loadedmetadata', () => {
-      setState(prev => ({ ...prev, duration: Math.floor(audio.duration) }));
-    });
+    const onLoaded = () => {
+      setState((prev) => ({
+        ...prev,
+        duration: Math.floor(audio.duration || 0),
+      }));
+    };
 
-    audio.addEventListener('ended', () => {
+    const onEnded = () => {
       if (state.isLooping) {
         audio.currentTime = 0;
         audio.play();
       } else {
         nextSong();
       }
-    });
+    };
+
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("loadedmetadata", onLoaded);
+    audio.addEventListener("ended", onEnded);
 
     return () => {
       audio.pause();
-      audio.src = '';
+      audio.src = "";
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("loadedmetadata", onLoaded);
+      audio.removeEventListener("ended", onEnded);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update audio source when song changes
+  // when song changes, load its src
   useEffect(() => {
-    if (audioRef.current && state.currentSong?.audioUrl) {
-      audioRef.current.src = state.currentSong.audioUrl;
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+
+    if (state.currentSong?.audioUrl) {
+      audio.src = state.currentSong.audioUrl;
+      audio.load();
+
       if (state.isPlaying) {
-        audioRef.current.play().catch(err => console.log('Audio playback failed:', err));
+        audio
+          .play()
+          .catch((err) => console.log("Audio playback failed:", err));
       }
     }
-  }, [state.currentSong?.audioUrl]);
+  }, [state.currentSong?.audioUrl, state.isPlaying]);
 
-  // Handle play/pause
-  useEffect(() => {
-    if (audioRef.current) {
-      if (state.isPlaying && state.currentSong?.audioUrl) {
-        audioRef.current.play().catch(err => console.log('Audio playback failed:', err));
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [state.isPlaying]);
-
-  // Handle volume changes
+  // sync volume
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = state.volume;
     }
   }, [state.volume]);
 
-  // Handle loop setting
+  // sync loop
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.loop = state.isLooping;
     }
   }, [state.isLooping]);
 
-  // Fallback timer for visual updates when no audio
-  useEffect(() => {
-    if (!state.currentSong?.audioUrl) {
-      const interval = setInterval(() => {
-        if (state.isPlaying && state.currentSong) {
-          setState(prev => ({
-            ...prev,
-            currentTime: Math.min(prev.currentTime + 1, state.currentSong?.duration || 0)
-          }));
-          
-          if (state.currentTime >= (state.currentSong?.duration || 0) - 1) {
-            if (state.isLooping) {
-              setState(prev => ({ ...prev, currentTime: 0 }));
-            } else {
-              nextSong();
-            }
-          }
-        }
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [state.isPlaying, state.currentTime, state.currentSong?.duration, state.isLooping, state.currentSong?.audioUrl]);
-
-  const extractColors = (imageUrl: string) => {
-    // In a real app, this would use a color extraction library
-    // For now, we'll use the predefined colors from the song data
-    const song = state.currentSong;
-    if (song?.primaryColor && song?.secondaryColor) {
-      setState(prev => ({
-        ...prev,
-        dominantColor: song.primaryColor!,
-        accentColor: song.secondaryColor!
-      }));
-    }
-  };
-
   const play = () => {
-    setState(prev => ({ ...prev, isPlaying: true, isMinimized: true }));
+    setState((prev) => ({ ...prev, isPlaying: true, isMinimized: true }));
   };
 
   const pause = () => {
-    setState(prev => ({ ...prev, isPlaying: false }));
+    setState((prev) => ({ ...prev, isPlaying: false }));
   };
 
   const togglePlay = () => {
-    setState(prev => ({ 
-      ...prev, 
+    setState((prev) => ({
+      ...prev,
       isPlaying: !prev.isPlaying,
-      // Minimize when starting playback
-      isMinimized: !prev.isPlaying ? true : prev.isMinimized
+      isMinimized: !prev.isPlaying ? true : prev.isMinimized,
     }));
   };
 
@@ -251,81 +240,100 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     } else {
       nextIndex = (currentSongIndex + 1) % state.playlist.length;
     }
-    
+
+    const next = state.playlist[nextIndex];
     setCurrentSongIndex(nextIndex);
-    const nextSong = state.playlist[nextIndex];
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
-      currentSong: nextSong,
+      currentSong: next,
       currentTime: 0,
-      dominantColor: nextSong.primaryColor || '#6750A4',
-      accentColor: nextSong.secondaryColor || '#E8DEF8'
+      dominantColor: next.primaryColor || "#6750A4",
+      accentColor: next.secondaryColor || "#E8DEF8",
     }));
   };
 
   const previousSong = () => {
-    const prevIndex = currentSongIndex === 0 ? state.playlist.length - 1 : currentSongIndex - 1;
-    setCurrentSongIndex(prevIndex);
+    const prevIndex =
+      currentSongIndex === 0
+        ? state.playlist.length - 1
+        : currentSongIndex - 1;
     const prevSong = state.playlist[prevIndex];
-    setState(prev => ({
+
+    setCurrentSongIndex(prevIndex);
+    setState((prev) => ({
       ...prev,
       currentSong: prevSong,
       currentTime: 0,
-      dominantColor: prevSong.primaryColor || '#6750A4',
-      accentColor: prevSong.secondaryColor || '#E8DEF8'
+      dominantColor: prevSong.primaryColor || "#6750A4",
+      accentColor: prevSong.secondaryColor || "#E8DEF8",
     }));
   };
 
   const selectSong = (song: Song) => {
-    const index = state.playlist.findIndex(s => s.id === song.id);
+    const index = state.playlist.findIndex((s) => s.id === song.id);
     setCurrentSongIndex(index);
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       currentSong: song,
       currentTime: 0,
       isPlaying: false,
-      dominantColor: song.primaryColor || '#6750A4',
-      accentColor: song.secondaryColor || '#E8DEF8'
+      dominantColor: song.primaryColor || "#6750A4",
+      accentColor: song.secondaryColor || "#E8DEF8",
     }));
   };
 
   const toggleLoop = () => {
-    setState(prev => ({ ...prev, isLooping: !prev.isLooping }));
+    setState((prev) => ({ ...prev, isLooping: !prev.isLooping }));
   };
 
   const toggleShuffle = () => {
-    setState(prev => ({ ...prev, isShuffling: !prev.isShuffling }));
+    setState((prev) => ({ ...prev, isShuffling: !prev.isShuffling }));
   };
 
   const toggleDarkMode = () => {
-    setState(prev => ({ ...prev, darkMode: !prev.darkMode }));
+    setState((prev) => ({ ...prev, darkMode: !prev.darkMode }));
   };
 
   const setVolume = (volume: number) => {
-    setState(prev => ({ ...prev, volume }));
+    setState((prev) => ({ ...prev, volume }));
   };
 
   const seekTo = (time: number) => {
-    setState(prev => ({ ...prev, currentTime: time }));
+    setState((prev) => ({ ...prev, currentTime: time }));
     if (audioRef.current) {
       audioRef.current.currentTime = time;
     }
   };
 
+  const extractColors = (_imageUrl: string) => {
+    const song = state.currentSong;
+    if (song?.primaryColor && song?.secondaryColor) {
+      setState((prev) => ({
+        ...prev,
+        dominantColor: song.primaryColor!,
+        accentColor: song.secondaryColor!,
+      }));
+    }
+  };
+
   const expandPlayer = () => {
-    setState(prev => ({ ...prev, isMinimized: false, isPlaying: false, isTransitioning: true }));
-    
-    // After transition completes (1000ms), set isTransitioning to false
+    setState((prev) => ({
+      ...prev,
+      isMinimized: false,
+      isPlaying: false,
+      isTransitioning: true,
+    }));
+
     setTimeout(() => {
-      setState(prev => ({ ...prev, isTransitioning: false }));
+      setState((prev) => ({ ...prev, isTransitioning: false }));
     }, 1000);
   };
 
   useEffect(() => {
     if (state.darkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [state.darkMode]);
 
@@ -343,7 +351,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     setVolume,
     seekTo,
     extractColors,
-    expandPlayer
+    expandPlayer,
   };
 
   return (
@@ -356,7 +364,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
 export function useMusicPlayer() {
   const context = useContext(MusicPlayerContext);
   if (context === undefined) {
-    throw new Error('useMusicPlayer must be used within a MusicPlayerProvider');
+    throw new Error("useMusicPlayer must be used within a MusicPlayerProvider");
   }
   return context;
 }
