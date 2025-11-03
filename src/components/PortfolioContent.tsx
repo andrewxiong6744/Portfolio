@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
 import bgImage from "../assets/Frame1.png";
 
-// reusable outline wrapper
+// --- shared outline wrapper ---
 interface InteractiveOutlineProps {
   children: React.ReactNode;
   glowColor?: string;
@@ -38,7 +38,7 @@ function InteractiveOutline({
   );
 }
 
-/* --- your outlines exactly as before --- */
+// --- outlines (unchanged positions) ---
 function NameOutline({ onClick }: { onClick?: () => void }) {
   return (
     <InteractiveOutline
@@ -54,26 +54,10 @@ function NameOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 221 286"
         >
           <g id="Name Outline">
-            <path
-              d={svgPaths.p23352a80}
-              fill="white"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
-            />
-            <path
-              d={svgPaths.p3611dc00}
-              fill="white"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
-            />
-            <path
-              d={svgPaths.p3cbcac80}
-              fill="white"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
-            />
-            <path
-              d={svgPaths.p1d1c6300}
-              fill="white"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
-            />
+            <path d={svgPaths.p23352a80} fill="white" />
+            <path d={svgPaths.p3611dc00} fill="white" />
+            <path d={svgPaths.p3cbcac80} fill="white" />
+            <path d={svgPaths.p1d1c6300} fill="white" />
           </g>
         </svg>
       </div>
@@ -217,7 +201,6 @@ function CatOutline({ onClick }: { onClick?: () => void }) {
 }
 
 export function PortfolioContent() {
-  // handlers (you can swap in real navigation later)
   const handleNameClick = () => console.log("About");
   const handleMatchaClick = () => console.log("Interests");
   const handleFlowerClick = () => console.log("Gallery");
@@ -226,21 +209,18 @@ export function PortfolioContent() {
   const handleCatClick = () => console.log("Meow!");
 
   return (
-    // page fills screen, but we DON'T scale the design
-    <div className="w-screen h-screen bg-black flex items-center justify-center overflow-hidden">
-      {/* fixed-size figma canvas */}
-      <div
-        className="relative"
-        style={{ width: "1440px", height: "1024px" }}
-      >
-        {/* the actual image at original scale */}
+    // page fills the viewport, but we do NOT scale the design
+    <div className="w-screen min-h-screen flex justify-center items-start overflow-auto">
+      {/* fixed 1440x1024 canvas, centered, NO scaling */}
+      <div className="relative" style={{ width: "1440px", height: "1024px" }}>
+        {/* actual image, 1:1 */}
         <img
-          alt="Portfolio Background"
           src={bgImage}
+          alt="Portfolio Background"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* overlays in the same 1440x1024 coordinate space */}
+        {/* overlays in exact same coordinate space */}
         <NameOutline onClick={handleNameClick} />
         <MatchaOutline onClick={handleMatchaClick} />
         <FlowerOutline onClick={handleFlowerClick} />
