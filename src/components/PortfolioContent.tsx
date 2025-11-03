@@ -374,18 +374,28 @@ export function PortfolioContent() {
   };
 
   return (
-    <div className="w-full h-full min-h-screen relative">
-      {/* Full-screen background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img
-          alt="Portfolio Background"
-          src={bgImage}
-          className="w-full h-full object-cover"
-        />
-      </div>
+  <div className="w-full h-full min-h-screen relative overflow-hidden">
+    {/* Full-screen background */}
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <img
+        alt="Portfolio Background"
+        src={bgImage}
+        className="w-full h-full object-cover"
+      />
+    </div>
 
-      {/* Interactive overlays stay on top */}
-      <div className="relative w-full h-full">
+    {/* Scaled outline container (maintains 1440x1024 aspect ratio) */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div
+        className="relative"
+        style={{
+          width: "1440px",
+          height: "1024px",
+          transform: "scale(var(--scale))",
+          transformOrigin: "top left",
+        }}
+      >
+        {/* All your outlines inside this container */}
         <NameOutline onClick={handleNameClick} />
         <MatchaOutline onClick={handleMatchaClick} />
         <FlowerOutline onClick={handleFlowerClick} />
@@ -394,5 +404,23 @@ export function PortfolioContent() {
         <CatOutline onClick={handleCatClick} />
       </div>
     </div>
-  );
+
+    {/* Responsive scaling script */}
+    <script dangerouslySetInnerHTML={{
+      __html: `
+        function updateScale() {
+          const baseWidth = 1440;
+          const baseHeight = 1024;
+          const scaleX = window.innerWidth / baseWidth;
+          const scaleY = window.innerHeight / baseHeight;
+          const scale = Math.min(scaleX, scaleY);
+          document.documentElement.style.setProperty('--scale', scale);
+        }
+        updateScale();
+        window.addEventListener('resize', updateScale);
+      `
+    }} />
+  </div>
+);
+
 }
