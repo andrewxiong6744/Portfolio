@@ -131,7 +131,7 @@ export function MusicPlayerProvider({
     isPlaying: false,
     currentTime: 0,
     duration: 0,
-    volume: 0.7,
+    volume: 0.5,
     isLooping: false,
     isShuffling: false,
     darkMode: false,
