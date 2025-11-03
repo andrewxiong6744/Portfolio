@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
-import bgImage from "../assets/Frame1.png"; // or ../assets/frame-1.png if you renamed
+import bgImage from "../assets/Frame 1.png"; // or frame-1.png if renamed
 
-// Interactive outline component with hover effects
+// Interactive outline component
 interface InteractiveOutlineProps {
   children: React.ReactNode;
   glowColor?: string;
@@ -28,7 +28,7 @@ function InteractiveOutline({
         transform: isHovered ? "scale(1.1)" : "scale(1)",
       }}
     >
-      {/* Hover glow effect */}
+      {/* Hover glow */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-60 blur-2xl pointer-events-none -z-10"
         style={{
@@ -36,12 +36,12 @@ function InteractiveOutline({
           transform: "scale(1.5)",
         }}
       />
-
       {children}
     </div>
   );
 }
 
+/* --- Outline Components --- */
 function NameOutline({ onClick }: { onClick?: () => void }) {
   return (
     <InteractiveOutline
@@ -348,75 +348,42 @@ function CatOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
+/* --- Main Portfolio Content --- */
 export function PortfolioContent() {
-  const handleNameClick = () => {
-    console.log("Navigating to About page...");
-  };
-
-  const handleMatchaClick = () => {
-    console.log("Navigating to Interests page...");
-  };
-
-  const handleFlowerClick = () => {
-    console.log("Navigating to Gallery page...");
-  };
-
-  const handleMusicClick = () => {
-    console.log("Navigating to Music page...");
-  };
-
-  const handleProjectsClick = () => {
-    console.log("Navigating to Projects page...");
-  };
-
-  const handleCatClick = () => {
-    console.log("Meow! 🐱");
-  };
+  const handleNameClick = () => console.log("Navigating to About page...");
+  const handleMatchaClick = () => console.log("Navigating to Interests page...");
+  const handleFlowerClick = () => console.log("Navigating to Gallery page...");
+  const handleMusicClick = () => console.log("Navigating to Music page...");
+  const handleProjectsClick = () => console.log("Navigating to Projects page...");
+  const handleCatClick = () => console.log("Meow! 🐱");
 
   return (
-  <div className="relative w-screen h-screen overflow-hidden">
-    {/* Full-screen image background */}
-    <img
-      alt="Portfolio Background"
-      src={bgImage}
-      className="absolute inset-0 w-full h-full object-cover"
-      style={{
-        objectPosition: "center",
-      }}
-    />
+    <div className="relative w-screen h-screen overflow-hidden bg-black">
+      {/* Centered fixed-size image */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div
+          className="relative"
+          style={{ width: "1440px", height: "1024px" }}
+        >
+          <img
+            alt="Portfolio Background"
+            src={bgImage}
+            className="absolute inset-0 w-full h-full object-contain"
+            style={{
+              objectPosition: "center",
+              backgroundColor: "black",
+            }}
+          />
 
-    {/* Aligned overlay layer */}
-    <div
-      className="absolute top-1/2 left-1/2 origin-center"
-      style={{
-        width: "1440px",
-        height: "1024px",
-        transform: "translate(-50%, -50%) scale(var(--scale))",
-      }}
-    >
-      <NameOutline onClick={handleNameClick} />
-      <MatchaOutline onClick={handleMatchaClick} />
-      <FlowerOutline onClick={handleFlowerClick} />
-      <MusicOutline onClick={handleMusicClick} />
-      <ProjectsOutline onClick={handleProjectsClick} />
-      <CatOutline onClick={handleCatClick} />
+          {/* Outlines (aligned perfectly with Figma) */}
+          <NameOutline onClick={handleNameClick} />
+          <MatchaOutline onClick={handleMatchaClick} />
+          <FlowerOutline onClick={handleFlowerClick} />
+          <MusicOutline onClick={handleMusicClick} />
+          <ProjectsOutline onClick={handleProjectsClick} />
+          <CatOutline onClick={handleCatClick} />
+        </div>
+      </div>
     </div>
-
-    {/* Shared scaling logic */}
-    <script
-      dangerouslySetInnerHTML={{
-        __html: `
-          function updateScale() {
-            const baseWidth = 1440;
-            const baseHeight = 1024;
-            const scale = Math.max(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
-            document.documentElement.style.setProperty('--scale', scale);
-          }
-          updateScale();
-          window.addEventListener('resize', updateScale);
-        `,
-      }}
-    />
-  </div>
-);
+  );
 }
