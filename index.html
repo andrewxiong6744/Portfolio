@@ -22,10 +22,10 @@
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);            /* center on spawn point */
-    animation: coinJump 700ms ease-out forwards;  /* tweak duration as you like */
+    animation: coinJump 550ms ease-out forwards;  /* tweak duration as you like */
     /* Per-coin custom arc via CSS variables set in JS */
     --dx: 0px;   /* horizontal offset at peak */
-    --dy: -45px; /* vertical offset at peak (negative = up) */
+    --dy: -30px; /* vertical offset at peak (negative = up) */
   }
   
   @keyframes coinJump {
