@@ -6,11 +6,6 @@ import React, {
   useEffect,
 } from "react";
 
-// 🔊 Background ambient sound setup
-const backgroundAudio = new Audio('/music/Bird Chirping Sound Effect.mp3');
-backgroundAudio.loop = true;
-backgroundAudio.volume = 0.3; // 👈 very quiet ambient volume
-
 interface Song {
   id: string;
   title: string;
@@ -59,11 +54,11 @@ const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(
   undefined
 );
 
-// helper to make URLs for files with spaces
+// ---------- Helpers for public/ assets (spaces, parentheses, etc.) ----------
 const cover = (name: string) => `/covers/${encodeURIComponent(name)}`;
 const audio = (name: string) => `/music/${encodeURIComponent(name)}`;
 
-// IMPORTANT: these names must match what’s in your screenshot
+// ---------- Your songs (ensure filenames match exactly in /public) ----------
 const mockSongs: Song[] = [
   {
     id: "1",
@@ -71,9 +66,7 @@ const mockSongs: Song[] = [
     artist: "Olivia Dean",
     album: "The Art of Loving",
     duration: 212,
-    // was: /public/covers/...
     coverUrl: cover("Olivia Dean Album Cover.png"),
-    // was: /public/music/...
     audioUrl: audio("Olivia Dean - A Couple Minutes (Lyric Video).mp3"),
     primaryColor: "#404040",
     secondaryColor: "#BFBFBF",
@@ -118,25 +111,20 @@ const mockSongs: Song[] = [
     album: "Freudian",
     duration: 241,
     coverUrl: cover("Daniel Caesar Album Cover.avif"),
-    // I saw “Blessed.mp3” in your music folder
     audioUrl: audio("Blessed.mp3"),
     primaryColor: "#b7ccd4",
     secondaryColor: "#78a2b7",
   },
 ];
 
-export function MusicPlayerProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function MusicPlayerProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<MusicPlayerState>({
     currentSong: mockSongs[0],
     playlist: mockSongs,
     isPlaying: false,
     currentTime: 0,
     duration: 0,
-    volume: 0.5,
+    volume: 0.5, // 👈 default volume = 50%
     isLooping: false,
     isShuffling: false,
     darkMode: false,
@@ -149,11 +137,55 @@ export function MusicPlayerProvider({
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // create audio element once
+  // ---------- Ambient birds (lazy-init on first user gesture) ----------
+  const AMBIENT_SRC = audio("Bird Chirping Sound Effect.mp3");
+  const ambientRef = useRef<HTMLAudioElement | null>(null);
+  function startAmbient() {
+    if (!ambientRef.current) {
+      const a = new Audio(AMBIENT_SRC);
+      a.loop = true;
+      a.volume = 0.15; // quiet ambience
+      ambientRef.current = a;
+    }
+    ambientRef.current
+      .play()
+      .catch(() => {
+        // Autoplay blocked; will try again on next user gesture
+      });
+  }
+
+  // Kick ambient off on first user interaction
+  useEffect(() => {
+    const kick = () => {
+      startAmbient();
+      window.removeEventListener("pointerdown", kick);
+      window.removeEventListener("keydown", kick);
+    };
+    window.addEventListener("pointerdown", kick);
+    window.addEventListener("keydown", kick);
+    return () => {
+      window.removeEventListener("pointerdown", kick);
+      window.removeEventListener("keydown", kick);
+      if (ambientRef.current) {
+        ambientRef.current.pause();
+        ambientRef.current.src = "";
+        ambientRef.current = null;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Slightly duck ambience while main music plays
+  useEffect(() => {
+    if (ambientRef.current) {
+      ambientRef.current.volume = state.isPlaying ? 0.06 : 0.15;
+    }
+  }, [state.isPlaying]);
+
+  // ---------- Create main <audio> once ----------
   useEffect(() => {
     const audio = new Audio();
     audioRef.current = audio;
-    backgroundAudio.play().catch(err => console.log('Ambient audio failed to play:', err));
 
     const onTimeUpdate = () => {
       setState((prev) => ({
@@ -192,45 +224,44 @@ export function MusicPlayerProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // when song changes, load its src
+  // ---------- Load a new song ONLY when the source changes ----------
   useEffect(() => {
-  if (!audioRef.current || !state.currentSong?.audioUrl) return;
+    if (!audioRef.current || !state.currentSong?.audioUrl) return;
 
-  const audio = audioRef.current;
-  audio.src = state.currentSong.audioUrl;
-  audio.load();
+    const audio = audioRef.current;
+    audio.src = state.currentSong.audioUrl;
+    audio.load();
 
-  // auto-play new song if already playing
-  if (state.isPlaying) {
-    audio.play().catch((err) => console.log("Audio playback failed:", err));
-  }
-}, [state.currentSong?.audioUrl]); // ✅ removed state.isPlaying here
-  useEffect(() => {
-  if (!audioRef.current) return;
-  const audio = audioRef.current;
-
-  if (state.isPlaying) {
-    audio.play().catch((err) => console.log("Audio playback failed:", err));
-  } else {
-    audio.pause();
-  }
-}, [state.isPlaying]);
-
-  // sync volume
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = state.volume;
+    // If we were playing, continue with the new track
+    if (state.isPlaying) {
+      audio.play().catch((err) => console.log("Audio playback failed:", err));
     }
+  }, [state.currentSong?.audioUrl]); // ✅ NOT dependent on isPlaying
+
+  // ---------- Play/Pause without reloading the track ----------
+  useEffect(() => {
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+
+    if (state.isPlaying) {
+      audio.play().catch((err) => console.log("Audio playback failed:", err));
+    } else {
+      audio.pause();
+    }
+  }, [state.isPlaying]);
+
+  // ---------- Sync volume & loop ----------
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = state.volume;
   }, [state.volume]);
 
-  // sync loop
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.loop = state.isLooping;
-    }
+    if (audioRef.current) audioRef.current.loop = state.isLooping;
   }, [state.isLooping]);
 
+  // ---------- Controls ----------
   const play = () => {
+    startAmbient(); // ensure ambience starts after user action
     setState((prev) => ({ ...prev, isPlaying: true, isMinimized: true }));
   };
 
@@ -239,6 +270,7 @@ export function MusicPlayerProvider({
   };
 
   const togglePlay = () => {
+    startAmbient(); // also start ambience on toggle if needed
     setState((prev) => ({
       ...prev,
       isPlaying: !prev.isPlaying,
@@ -253,7 +285,6 @@ export function MusicPlayerProvider({
     } else {
       nextIndex = (currentSongIndex + 1) % state.playlist.length;
     }
-
     const next = state.playlist[nextIndex];
     setCurrentSongIndex(nextIndex);
     setState((prev) => ({
@@ -313,9 +344,7 @@ export function MusicPlayerProvider({
 
   const seekTo = (time: number) => {
     setState((prev) => ({ ...prev, currentTime: time }));
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-    }
+    if (audioRef.current) audioRef.current.currentTime = time;
   };
 
   const extractColors = (_imageUrl: string) => {
@@ -333,7 +362,7 @@ export function MusicPlayerProvider({
     setState((prev) => ({
       ...prev,
       isMinimized: false,
-      isPlaying: false,
+      isPlaying: false, // keep as your original; change to prev.isPlaying to avoid pausing on expand
       isTransitioning: true,
     }));
 
@@ -342,6 +371,7 @@ export function MusicPlayerProvider({
     }, 1000);
   };
 
+  // ---------- Dark mode class sync ----------
   useEffect(() => {
     if (state.darkMode) {
       document.documentElement.classList.add("dark");
