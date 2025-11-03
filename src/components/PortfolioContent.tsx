@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
-import bgImage from "../assets/Frame 1.png"; // or ../assets/frame-1.png if you renamed
+import bgImage from "../assets/Frame1.png"; // or ../assets/frame-1.png if you renamed
 
 // Interactive outline component with hover effects
 interface InteractiveOutlineProps {
