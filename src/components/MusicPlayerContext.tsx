@@ -6,6 +6,11 @@ import React, {
   useEffect,
 } from "react";
 
+// 🔊 Background ambient sound setup
+const backgroundAudio = new Audio('/music/Bird Chirping Sound Effect.mp3');
+backgroundAudio.loop = true;
+backgroundAudio.volume = 0.15; // 👈 very quiet ambient volume
+
 interface Song {
   id: string;
   title: string;
@@ -148,6 +153,7 @@ export function MusicPlayerProvider({
   useEffect(() => {
     const audio = new Audio();
     audioRef.current = audio;
+    backgroundAudio.play().catch(err => console.log('Ambient audio failed to play:', err));
 
     const onTimeUpdate = () => {
       setState((prev) => ({
