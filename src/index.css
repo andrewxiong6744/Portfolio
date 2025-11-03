@@ -78,10 +78,8 @@ html, body {
      cursor: url("/cursors/mario-64.png") 32 32, auto; */
 }
 
-/* Ensure clickable things also show Mario (browsers often force 'pointer') */
-a, button, [role="button"], .cursor-pointer {
-  cursor: url("/cursor/mario_cursor_64x64.png") 32 32, pointer;
-  /* or 64×64 hotspot: 32 32 */
+a:hover, button:hover, [role="button"]:hover, .cursor-pointer:hover {
+  cursor: url("/cursor/mario_jump_cursor_64x64.png") 32 32, pointer;
 }
 
 @layer theme {
