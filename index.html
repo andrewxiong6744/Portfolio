@@ -21,25 +21,39 @@
     height: 40px;
     pointer-events: none;
     z-index: 9999;
-    animation: fadeOut 0.8s forwards ease-out;
+    animation: fadeOut 1s forwards ease-out;
+    transform: translate(-50%, -50%);
   }
 
   @keyframes fadeOut {
-    from { opacity: 1; transform: scale(1); }
-    to { opacity: 0; transform: scale(0.5); }
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
   }
 </style>
 
 <script>
+  let lastSpawn = 0;
+  const spawnInterval = 100; // 👈 milliseconds between each coin (higher = fewer coins)
+
   document.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastSpawn < spawnInterval) return; // limit spawn rate
+    lastSpawn = now;
+
     const coin = document.createElement('img');
-    coin.src = '/mariocoin_40x40.gif'; // Path to your GIF
+    coin.src = '/mariocoin_40x40.gif'; // path to your GIF in /public/
     coin.className = 'coin-trail';
-    coin.style.left = `${e.pageX - 20}px`;
-    coin.style.top = `${e.pageY - 20}px`;
+    coin.style.left = `${e.pageX}px`;
+    coin.style.top = `${e.pageY}px`;
     document.body.appendChild(coin);
 
-    // Remove the coin after animation
-    setTimeout(() => coin.remove(), 800);
+    // remove coin after fade
+    setTimeout(() => coin.remove(), 1000);
   });
 </script>
