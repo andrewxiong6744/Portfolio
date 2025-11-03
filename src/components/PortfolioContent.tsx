@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
-import bgImage from "../assets/Frame 1.png"; // or frame-1.png if renamed
+import bgImage from "../assets/Frame1.png"; // or frame-1.png if renamed
 
 // Interactive outline component
 interface InteractiveOutlineProps {
