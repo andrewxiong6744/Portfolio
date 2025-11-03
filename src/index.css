@@ -79,7 +79,7 @@ html, body {
 }
 
 a:hover, button:hover, [role="button"]:hover, .cursor-pointer:hover {
-  cursor: url("/cursor/mario_jump_cursor_64x64.png") 32 32, pointer;
+  cursor: url("/cursor/mario_jump_cursor_64x64_final.png") 32 32, pointer;
 }
 
 @layer theme {
