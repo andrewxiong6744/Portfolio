@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
-import bgImage from "../assets/Frame1.png";
+import bgImage from "../assets/Frame1.png"; // 1794 x 1024
 
 // --- shared outline wrapper ---
 interface InteractiveOutlineProps {
@@ -38,7 +38,7 @@ function InteractiveOutline({
   );
 }
 
-// --- outlines (unchanged positions) ---
+// --- your outlines (same as before) ---
 function NameOutline({ onClick }: { onClick?: () => void }) {
   return (
     <InteractiveOutline
@@ -209,18 +209,21 @@ export function PortfolioContent() {
   const handleCatClick = () => console.log("Meow!");
 
   return (
-    // page fills the viewport, but we do NOT scale the design
-    <div className="w-screen min-h-screen flex justify-center items-start overflow-auto">
-      {/* fixed 1440x1024 canvas, centered, NO scaling */}
-      <div className="relative" style={{ width: "1440px", height: "1024px" }}>
-        {/* actual image, 1:1 */}
+    // page can scroll; no background color; no scaling
+    <div className="w-screen min-h-screen flex items-start justify-center overflow-auto">
+      {/* fixed-size canvas: 1794 x 1024 */}
+      <div
+        className="relative"
+        style={{ width: "1794px", height: "1024px" }}
+      >
+        {/* image at 1:1 */}
         <img
-          src={bgImage}
           alt="Portfolio Background"
+          src={bgImage}
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* overlays in exact same coordinate space */}
+        {/* overlays in same coordinate space */}
         <NameOutline onClick={handleNameClick} />
         <MatchaOutline onClick={handleMatchaClick} />
         <FlowerOutline onClick={handleFlowerClick} />
