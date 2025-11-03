@@ -223,7 +223,7 @@ export function PortfolioContent() {
       <style jsx>{`
         .portfolio-scaled-container {
           /* Base design dimensions */
-          width: 1440px;
+          width: 1794px;
           height: 1024px;
           position: relative;
           
