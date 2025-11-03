@@ -188,20 +188,27 @@ export function MusicPlayerProvider({
 
   // when song changes, load its src
   useEffect(() => {
-    if (!audioRef.current) return;
-    const audio = audioRef.current;
+  if (!audioRef.current || !state.currentSong?.audioUrl) return;
 
-    if (state.currentSong?.audioUrl) {
-      audio.src = state.currentSong.audioUrl;
-      audio.load();
+  const audio = audioRef.current;
+  audio.src = state.currentSong.audioUrl;
+  audio.load();
 
-      if (state.isPlaying) {
-        audio
-          .play()
-          .catch((err) => console.log("Audio playback failed:", err));
-      }
-    }
-  }, [state.currentSong?.audioUrl, state.isPlaying]);
+  // auto-play new song if already playing
+  if (state.isPlaying) {
+    audio.play().catch((err) => console.log("Audio playback failed:", err));
+  }
+}, [state.currentSong?.audioUrl]); // ✅ removed state.isPlaying here
+  useEffect(() => {
+  if (!audioRef.current) return;
+  const audio = audioRef.current;
+
+  if (state.isPlaying) {
+    audio.play().catch((err) => console.log("Audio playback failed:", err));
+  } else {
+    audio.pause();
+  }
+}, [state.isPlaying]);
 
   // sync volume
   useEffect(() => {
