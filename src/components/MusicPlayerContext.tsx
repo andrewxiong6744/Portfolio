@@ -8,7 +8,6 @@ interface Song {
   duration: number;
   coverUrl: string;
   audioUrl: string;
-  source: 'internal' | 'sdcard';
   primaryColor?: string;
   secondaryColor?: string;
 }
@@ -53,63 +52,58 @@ const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(und
 const mockSongs: Song[] = [
   {
     id: '1',
-    title: 'Falling Behind',
-    artist: 'Laufey',
-    album: 'Everything I Know About Love',
-    duration: 186,
-    coverUrl: 'https://images.unsplash.com/photo-1673732993073-695635eae308?w=400&h=400&fit=crop&crop=center',
-    audioUrl: '', // Add your audio URL here to enable playback
-    source: 'internal',
-    primaryColor: '#8B7355',
-    secondaryColor: '#F5E6D3'
+    title: 'A Couple Minutes',
+    artist: 'Olivia Dean',
+    album: 'The Art of Loving',
+    duration: 212,
+    coverUrl: '/public/covers/Olivia Dean Album Cover.png',
+    audioUrl: '/public/music/Olivia Dean - A Couple Minutes (Lyric Video).mp3', // Add your audio URL here to enable playback
+    primaryColor: '#404040',
+    secondaryColor: '#BFBFBF'
   },
   {
     id: '2',
-    title: 'The way things go',
+    title: 'The Way Things Go',
     artist: 'beabadoobee',
     album: 'Beatopia',
-    duration: 191,
-    coverUrl: 'https://images.unsplash.com/photo-1611234688667-76b6d8fadd75?w=400&h=400&fit=crop&crop=center',
-    audioUrl: '',
-    source: 'sdcard',
-    primaryColor: '#E85D75',
-    secondaryColor: '#FFE4E9'
+    duration: 203,
+    coverUrl: '/public/covers/Beabadoobee Album Cover.jpeg',
+    audioUrl: '/public/music/beabadoobee - the way things go.mp3',
+    primaryColor: '#BEBDBF',
+    secondaryColor: '#A58169'
   },
   {
     id: '3',
     title: 'Soft Spot',
     artist: 'Keshi',
     album: 'GABRIEL',
-    duration: 202,
-    coverUrl: 'https://images.unsplash.com/photo-1628795743560-18d44cd5130e?w=400&h=400&fit=crop&crop=center',
-    audioUrl: '',
-    source: 'internal',
-    primaryColor: '#6B9AC4',
-    secondaryColor: '#E3F0FF'
+    duration: 204,
+    coverUrl: '/public/covers/Keshi Album Cover.jpeg',
+    audioUrl: '/public/music/keshi - Soft Spot (Official Music Video).mp3',
+    primaryColor: '#262621',
+    secondaryColor: '#BFBAA8'
   },
   {
     id: '4',
-    title: 'A couple minutes',
-    artist: 'Olivia Dean',
-    album: 'Messy',
-    duration: 214,
-    coverUrl: 'https://images.unsplash.com/photo-1564267309507-a02f89e27c39?w=400&h=400&fit=crop&crop=center',
-    audioUrl: '',
-    source: 'sdcard',
-    primaryColor: '#D4A373',
-    secondaryColor: '#FFF4E6'
+    title: 'Falling Behind',
+    artist: 'Laufey',
+    album: 'Everything I Know About Love',
+    duration: 174,
+    coverUrl: '/public/covers/Laufey Album Cover.jpeg',
+    audioUrl: '/public/music/Laufey - Falling Behind (Official Audio).mp3',
+    primaryColor: '#939848',
+    secondaryColor: '#324F17'
   },
   {
     id: '5',
     title: 'Superposition',
     artist: 'Daniel Caesar',
     album: 'Freudian',
-    duration: 195,
-    coverUrl: 'https://images.unsplash.com/photo-1759088009958-14e99324925d?w=400&h=400&fit=crop&crop=center',
-    audioUrl: '',
-    source: 'internal',
-    primaryColor: '#9B6B4F',
-    secondaryColor: '#F0E5DC'
+    duration: 241,
+    coverUrl: '/public/covers/Daniel Caesar Album Cover.avif',
+    audioUrl: '/public/music/Blessed.mp3',
+    primaryColor: '#b7ccd4',
+    secondaryColor: '#78a2b7'
   }
 ];
 
