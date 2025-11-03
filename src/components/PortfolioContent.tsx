@@ -205,12 +205,14 @@ export function PortfolioContent() {
     <div className="w-full h-full min-h-screen flex items-center justify-center">
       {/* Full Page Interactive Portfolio - Scaled Container */}
       <div className="portfolio-scaled-container">
-        <div className="absolute h-[1024px] left-0 top-0 w-[1440px]" data-name="Generated Image November 01, 2025 - 8_24PM 1">  
-          <div className="bg-white relative size-full" data-name="Landing page">
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <img alt="Portfolio Background" className="absolute inset-0 size-full object-cover" src={imgGeneratedImageNovember012025824Pm1} />
-            </div>
-          </div>
+        {/* Full-screen background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            alt="Portfolio Background"
+            src={imgGeneratedImageNovember012025824Pm1}
+            className="w-full h-full object-cover"
+          />
+        </div>
           <NameOutline onClick={handleNameClick} />
           <MatchaOutline onClick={handleMatchaClick} />
           <FlowerOutline onClick={handleFlowerClick} />
