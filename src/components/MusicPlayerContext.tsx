@@ -124,7 +124,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     isPlaying: false,
     currentTime: 0,
     duration: 0,
-    volume: 0.3, // 👈 default volume = 50%
+    volume: 0.25, // 👈 default volume = 50%
     isLooping: false,
     isShuffling: false,
     darkMode: false,
@@ -144,7 +144,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     if (!ambientRef.current) {
       const a = new Audio(AMBIENT_SRC);
       a.loop = true;
-      a.volume = 0.65; // quiet ambience
+      a.volume = 0.75; // quiet ambience
       ambientRef.current = a;
     }
     ambientRef.current
