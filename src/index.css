@@ -72,7 +72,7 @@
 /* Default cursor everywhere */
 html, body {
   /* 32×32 version: hotspot at (16,16) */
-  cursor: url("/cursors/mario_cursor_32x32.png") 16 16, auto;
+  cursor: url("/cursor/mario_cursor_32x32.png") 16 16, auto;
 
   /* If you only made 64×64, use this instead:
      cursor: url("/cursors/mario-64.png") 32 32, auto; */
@@ -80,18 +80,8 @@ html, body {
 
 /* Ensure clickable things also show Mario (browsers often force 'pointer') */
 a, button, [role="button"], .cursor-pointer {
-  cursor: url("/cursors/mario_cursor_32x32.png") 16 16, pointer;
+  cursor: url("/cursor/mario_cursor_32x32.png") 16 16, pointer;
   /* or 64×64 hotspot: 32 32 */
-}
-
-/* Optional: when hovering draggable elements (if any) */
-[draggable="true"] {
-  cursor: url("/cursors/mario_cursor_32x32.png") 16 16, move;
-}
-
-/* Optional: keep pixel-art look for any large Mario images on page (not the cursor) */
-.pixelated {
-  image-rendering: pixelated;
 }
 
 @layer theme {
