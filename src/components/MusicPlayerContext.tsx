@@ -144,7 +144,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     if (!ambientRef.current) {
       const a = new Audio(AMBIENT_SRC);
       a.loop = true;
-      a.volume = 0.3; // quiet ambience
+      a.volume = 0.5; // quiet ambience
       ambientRef.current = a;
     }
     ambientRef.current
