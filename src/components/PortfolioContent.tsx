@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
 import bgImage from "../assets/Frame1.png";
 
-// Interactive outline component with hover effects
+// reusable outline wrapper
 interface InteractiveOutlineProps {
   children: React.ReactNode;
   glowColor?: string;
@@ -24,11 +24,8 @@ function InteractiveOutline({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
-      style={{
-        transform: isHovered ? "scale(1.1)" : "scale(1)",
-      }}
+      style={{ transform: isHovered ? "scale(1.1)" : "scale(1)" }}
     >
-      {/* Hover glow effect */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-60 blur-2xl pointer-events-none -z-10"
         style={{
@@ -41,6 +38,7 @@ function InteractiveOutline({
   );
 }
 
+/* --- your outlines exactly as before --- */
 function NameOutline({ onClick }: { onClick?: () => void }) {
   return (
     <InteractiveOutline
@@ -59,25 +57,21 @@ function NameOutline({ onClick }: { onClick?: () => void }) {
             <path
               d={svgPaths.p23352a80}
               fill="white"
-              id="Line 1"
               className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
             />
             <path
               d={svgPaths.p3611dc00}
               fill="white"
-              id="Line 2"
               className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
             />
             <path
               d={svgPaths.p3cbcac80}
               fill="white"
-              id="Line 3"
               className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
             />
             <path
               d={svgPaths.p1d1c6300}
               fill="white"
-              id="Line 4"
               className="group-hover:drop-shadow-[0_0_8px_rgba(255,107,107,0.8)]"
             />
           </g>
@@ -102,42 +96,12 @@ function MatchaOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 291 216"
         >
           <g id="Matcha Outline">
-            <path
-              d={svgPaths.p116f5c00}
-              fill="white"
-              id="Vector 1"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
-            <path
-              d={svgPaths.p2b096d80}
-              fill="white"
-              id="Vector 2"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
-            <path
-              d={svgPaths.p3da9d700}
-              fill="white"
-              id="Vector 3"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
-            <path
-              d={svgPaths.pa18c800}
-              fill="white"
-              id="Vector 6"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
-            <path
-              d={svgPaths.p32699540}
-              fill="white"
-              id="Vector 7"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
-            <path
-              d={svgPaths.p2faab080}
-              fill="white"
-              id="Vector 8"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(109,219,109,0.8)]"
-            />
+            <path d={svgPaths.p116f5c00} fill="white" />
+            <path d={svgPaths.p2b096d80} fill="white" />
+            <path d={svgPaths.p3da9d700} fill="white" />
+            <path d={svgPaths.pa18c800} fill="white" />
+            <path d={svgPaths.p32699540} fill="white" />
+            <path d={svgPaths.p2faab080} fill="white" />
           </g>
         </svg>
       </div>
@@ -160,42 +124,12 @@ function FlowerOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 228 271"
         >
           <g id="Flower Outline">
-            <path
-              d={svgPaths.p38ea500}
-              fill="white"
-              id="Vector 9"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
-            <path
-              d={svgPaths.p37ad8780}
-              fill="white"
-              id="Vector 10"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
-            <path
-              d={svgPaths.pbedc300}
-              fill="white"
-              id="Vector 11"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
-            <path
-              d={svgPaths.p1130fc00}
-              fill="white"
-              id="Vector 12"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
-            <path
-              d={svgPaths.p31325a00}
-              fill="white"
-              id="Vector 14"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
-            <path
-              d={svgPaths.p2dd8c180}
-              fill="white"
-              id="Vector 15"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,105,180,0.8)]"
-            />
+            <path d={svgPaths.p38ea500} fill="white" />
+            <path d={svgPaths.p37ad8780} fill="white" />
+            <path d={svgPaths.pbedc300} fill="white" />
+            <path d={svgPaths.p1130fc00} fill="white" />
+            <path d={svgPaths.p31325a00} fill="white" />
+            <path d={svgPaths.p2dd8c180} fill="white" />
           </g>
         </svg>
       </div>
@@ -218,54 +152,14 @@ function MusicOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 445 549"
         >
           <g id="Music Outline">
-            <path
-              d={svgPaths.p7c74d00}
-              fill="white"
-              id="Vector 16"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p2ed5c800}
-              fill="white"
-              id="Vector 18"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p3d72ea80}
-              fill="white"
-              id="Vector 20"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p460cf72}
-              fill="white"
-              id="Vector 21"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p1c428900}
-              fill="white"
-              id="Vector 19"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p14eda200}
-              fill="white"
-              id="Vector 24"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.pacfcd80}
-              fill="white"
-              id="Vector 25"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
-            <path
-              d={svgPaths.p2c124d00}
-              fill="white"
-              id="Vector 17"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(78,205,196,0.8)]"
-            />
+            <path d={svgPaths.p7c74d00} fill="white" />
+            <path d={svgPaths.p2ed5c800} fill="white" />
+            <path d={svgPaths.p3d72ea80} fill="white" />
+            <path d={svgPaths.p460cf72} fill="white" />
+            <path d={svgPaths.p1c428900} fill="white" />
+            <path d={svgPaths.p14eda200} fill="white" />
+            <path d={svgPaths.pacfcd80} fill="white" />
+            <path d={svgPaths.p2c124d00} fill="white" />
           </g>
         </svg>
       </div>
@@ -288,30 +182,10 @@ function ProjectsOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 404 341"
         >
           <g id="Projects Outline">
-            <path
-              d={svgPaths.pc32fc00}
-              fill="white"
-              id="Vector 28"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(123,104,238,0.8)]"
-            />
-            <path
-              d={svgPaths.p10111600}
-              fill="white"
-              id="Vector 26"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(123,104,238,0.8)]"
-            />
-            <path
-              d={svgPaths.p2df0f900}
-              fill="white"
-              id="Vector 27"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(123,104,238,0.8)]"
-            />
-            <path
-              d={svgPaths.p1671e628}
-              fill="white"
-              id="Vector 29"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(123,104,238,0.8)]"
-            />
+            <path d={svgPaths.pc32fc00} fill="white" />
+            <path d={svgPaths.p10111600} fill="white" />
+            <path d={svgPaths.p2df0f900} fill="white" />
+            <path d={svgPaths.p1671e628} fill="white" />
           </g>
         </svg>
       </div>
@@ -334,12 +208,7 @@ function CatOutline({ onClick }: { onClick?: () => void }) {
           viewBox="0 0 79 81"
         >
           <g id="Cat Outline">
-            <path
-              d={svgPaths.pf96e580}
-              fill="white"
-              id="Vector 30"
-              className="group-hover:drop-shadow-[0_0_8px_rgba(255,165,0,0.8)]"
-            />
+            <path d={svgPaths.pf96e580} fill="white" />
           </g>
         </svg>
       </div>
@@ -348,36 +217,36 @@ function CatOutline({ onClick }: { onClick?: () => void }) {
 }
 
 export function PortfolioContent() {
-  const handleNameClick = () => console.log("Navigating to About page…");
-  const handleMatchaClick = () => console.log("Navigating to Interests page…");
-  const handleFlowerClick = () => console.log("Navigating to Gallery page…");
-  const handleMusicClick = () => console.log("Navigating to Music page…");
-  const handleProjectsClick = () => console.log("Navigating to Projects page…");
-  const handleCatClick = () => console.log("Meow! 🐱");
+  // handlers (you can swap in real navigation later)
+  const handleNameClick = () => console.log("About");
+  const handleMatchaClick = () => console.log("Interests");
+  const handleFlowerClick = () => console.log("Gallery");
+  const handleMusicClick = () => console.log("Music");
+  const handleProjectsClick = () => console.log("Projects");
+  const handleCatClick = () => console.log("Meow!");
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-black">
-      {/* 1. Full-screen background that covers the whole viewport */}
-      <img
-        src={bgImage}
-        alt="Portfolio Background"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    // page fills screen, but we DON'T scale the design
+    <div className="w-screen h-screen bg-black flex items-center justify-center overflow-hidden">
+      {/* fixed-size figma canvas */}
+      <div
+        className="relative"
+        style={{ width: "1440px", height: "1024px" }}
+      >
+        {/* the actual image at original scale */}
+        <img
+          alt="Portfolio Background"
+          src={bgImage}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
-      {/* 2. Figma-aligned overlay — fixed 1440x1024, centered */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className="relative"
-          style={{ width: "1440px", height: "1024px" }}
-        >
-          {/* Outlines stay exactly where they were */}
-          <NameOutline onClick={handleNameClick} />
-          <MatchaOutline onClick={handleMatchaClick} />
-          <FlowerOutline onClick={handleFlowerClick} />
-          <MusicOutline onClick={handleMusicClick} />
-          <ProjectsOutline onClick={handleProjectsClick} />
-          <CatOutline onClick={handleCatClick} />
-        </div>
+        {/* overlays in the same 1440x1024 coordinate space */}
+        <NameOutline onClick={handleNameClick} />
+        <MatchaOutline onClick={handleMatchaClick} />
+        <FlowerOutline onClick={handleFlowerClick} />
+        <MusicOutline onClick={handleMusicClick} />
+        <ProjectsOutline onClick={handleProjectsClick} />
+        <CatOutline onClick={handleCatClick} />
       </div>
     </div>
   );
