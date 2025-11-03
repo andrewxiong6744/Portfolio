@@ -25,7 +25,7 @@
     animation: coinJump 700ms ease-out forwards;  /* tweak duration as you like */
     /* Per-coin custom arc via CSS variables set in JS */
     --dx: 0px;   /* horizontal offset at peak */
-    --dy: -60px; /* vertical offset at peak (negative = up) */
+    --dy: -45px; /* vertical offset at peak (negative = up) */
   }
   
   @keyframes coinJump {
@@ -38,7 +38,7 @@
 
 <script>
   // Distance in pixels between coins (larger = fewer coins)
-  const COIN_SPACING = 70;
+  const COIN_SPACING = 85;
 
   let lastX = null, lastY = null;
   let carry = 0; // leftover distance from previous segment
