@@ -2,8 +2,9 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 
-interface MusicPageProps {
-  onBack: () => void;
+interface MatchaPageProps { onBack: () => void; }
+export function MatchaPage({ onBack }: MatchaPageProps) {
+  // (keep the JSX body the same)
 }
 
 export function MusicPage({ onBack }: MusicPageProps) {
