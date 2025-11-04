@@ -2,11 +2,9 @@ import React from 'react';
 import { ArrowLeft, Cat } from 'lucide-react';
 import { Button } from '../ui/button';
 
-interface EasterEggPageProps {
-  onBack: () => void;
-}
+interface CatPageProps { onBack: () => void; }
 
-export function EasterEggPage({ onBack }: EasterEggPageProps) {
+export function CatPage({ onBack }: CatPageProps) {
   return (
     <div className="w-full h-full min-h-screen bg-gradient-to-br from-orange-50 to-amber-100 p-8 overflow-auto">
       <div className="max-w-4xl mx-auto">
