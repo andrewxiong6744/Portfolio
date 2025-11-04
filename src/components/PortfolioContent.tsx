@@ -5,7 +5,7 @@ import bgImage from "../assets/Frame1.png"; // 1794 x 1024
 interface InteractiveOutlineProps {
   children: React.ReactNode;
   glowColor?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   className?: string;
 }
 
@@ -38,7 +38,7 @@ function InteractiveOutline({
 }
 
 /* ---- outlines (same positions) ---- */
-function NameOutline({ onClick }: { onClick?: () => void }) {
+function NameOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#ff6b6b"
@@ -46,13 +46,8 @@ function NameOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[274px] left-[196px] top-[84px] w-[208.05px]"
     >
       <div className="absolute bottom-0 left-0 right-[-5.8%] top-[-4.24%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 221 286"
-        >
-          <g id="Name Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 221 286">
+          <g>
             <path d={svgPaths.p23352a80} fill="white" />
             <path d={svgPaths.p3611dc00} fill="white" />
             <path d={svgPaths.p3cbcac80} fill="white" />
@@ -64,7 +59,7 @@ function NameOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function MatchaOutline({ onClick }: { onClick?: () => void }) {
+function MatchaOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#6ddb6d"
@@ -72,13 +67,8 @@ function MatchaOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[202.318px] left-[140.35px] top-[671px] w-[281.436px]"
     >
       <div className="absolute inset-[-3.29%_-0.96%_-3.17%_-2.2%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 291 216"
-        >
-          <g id="Matcha Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 291 216">
+          <g>
             <path d={svgPaths.p116f5c00} fill="white" />
             <path d={svgPaths.p2b096d80} fill="white" />
             <path d={svgPaths.p3da9d700} fill="white" />
@@ -92,7 +82,7 @@ function MatchaOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function FlowerOutline({ onClick }: { onClick?: () => void }) {
+function FlowerOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#ff69b4"
@@ -100,13 +90,8 @@ function FlowerOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[260.111px] left-[877px] top-[541px] w-[213.665px]"
     >
       <div className="absolute inset-[-1.85%_-3.53%_-2.12%_-2.81%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 228 271"
-        >
-          <g id="Flower Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 228 271">
+          <g>
             <path d={svgPaths.p38ea500} fill="white" />
             <path d={svgPaths.p37ad8780} fill="white" />
             <path d={svgPaths.pbedc300} fill="white" />
@@ -120,7 +105,7 @@ function FlowerOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function MusicOutline({ onClick }: { onClick?: () => void }) {
+function MusicOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#4ecdc4"
@@ -128,13 +113,8 @@ function MusicOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[542.228px] left-[1020.24px] top-[202.5px] w-[442.895px]"
     >
       <div className="absolute inset-[-0.9%_-0.01%_-0.19%_-0.32%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 445 549"
-        >
-          <g id="Music Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 445 549">
+          <g>
             <path d={svgPaths.p7c74d00} fill="white" />
             <path d={svgPaths.p2ed5c800} fill="white" />
             <path d={svgPaths.p3d72ea80} fill="white" />
@@ -150,7 +130,7 @@ function MusicOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function ProjectsOutline({ onClick }: { onClick?: () => void }) {
+function ProjectsOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#7b68ee"
@@ -158,13 +138,8 @@ function ProjectsOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[331.11px] left-[799.66px] top-[74.84px] w-[392.228px]"
     >
       <div className="absolute inset-[-1.75%_-1.22%_-1.04%_-1.63%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 404 341"
-        >
-          <g id="Projects Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 404 341">
+          <g>
             <path d={svgPaths.pc32fc00} fill="white" />
             <path d={svgPaths.p10111600} fill="white" />
             <path d={svgPaths.p2df0f900} fill="white" />
@@ -176,7 +151,7 @@ function ProjectsOutline({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function CatOutline({ onClick }: { onClick?: () => void }) {
+function CatOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <InteractiveOutline
       glowColor="#ffa500"
@@ -184,13 +159,8 @@ function CatOutline({ onClick }: { onClick?: () => void }) {
       className="absolute h-[74.974px] left-[554.12px] top-[477.89px] w-[71.607px]"
     >
       <div className="absolute bottom-0 left-0 right-[-9.95%] top-[-7.09%]">
-        <svg
-          className="block size-full"
-          fill="none"
-          preserveAspectRatio="none"
-          viewBox="0 0 79 81"
-        >
-          <g id="Cat Outline">
+        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 79 81">
+          <g>
             <path d={svgPaths.pf96e580} fill="white" />
           </g>
         </svg>
@@ -211,11 +181,8 @@ export function PortfolioContent() {
     // allow horizontal scroll if viewport < 1794
     <div className="w-screen min-h-screen flex items-start justify-center overflow-auto">
       {/* outer = real image size */}
-      <div
-        className="relative"
-        style={{ width: "1794px", height: "1024px" }}
-      >
-        {/* the actual image */}
+      <div className="relative" style={{ width: "1794px", height: "1024px" }}>
+        {/* background image */}
         <img
           alt="Portfolio Background"
           src={bgImage}
@@ -240,219 +207,5 @@ export function PortfolioContent() {
         </div>
       </div>
     </div>
-    
-interface PortfolioContentProps {
-  onNavigate: (page: string, clickPosition: { x: number; y: number }, color: string) => void;
-}
-
-type ModalType = 'interests' | 'gallery' | 'music' | 'easter-egg' | null;
-
-export function PortfolioContent({ onNavigate }: PortfolioContentProps) {
-  const [openModal, setOpenModal] = useState<ModalType>(null);
-  const [modalColor, setModalColor] = useState<string>('#ffffff');
-
-  const handleNameClick = (e: React.MouseEvent) => {
-    onNavigate('about', { x: e.clientX, y: e.clientY }, '#ff6b6b');
-  };
-
-  const handleMatchaClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setModalColor('#6ddb6d');
-    setOpenModal('interests');
-  };
-
-  const handleFlowerClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setModalColor('#ff69b4');
-    setOpenModal('gallery');
-  };
-
-  const handleMusicClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setModalColor('#4ecdc4');
-    setOpenModal('music');
-  };
-
-  const handleProjectsClick = (e: React.MouseEvent) => {
-    onNavigate('projects', { x: e.clientX, y: e.clientY }, '#7b68ee');
-  };
-
-  const handleCatClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setModalColor('#ffa500');
-    setOpenModal('easter-egg');
-  };
-
-  const closeModal = () => {
-    setOpenModal(null);
-  };
-
-  return (
-    <>
-      <div className="w-full h-full min-h-screen flex items-center justify-center">
-        {/* Full Page Interactive Portfolio - Scaled Container */}
-        <div className="portfolio-scaled-container">
-          <div className="bg-white relative size-full" data-name="Landing page">
-            <div className="absolute h-[1024px] left-0 top-0 w-[1440px]" data-name="Generated Image November 01, 2025 - 8_24PM 1">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <img alt="Portfolio Background" className="absolute inset-0 size-full object-cover" src={imgGeneratedImageNovember012025824Pm1} />
-              </div>
-            </div>
-            
-            <NameOutline onClick={handleNameClick} />
-            <MatchaOutline onClick={handleMatchaClick} />
-            <FlowerOutline onClick={handleFlowerClick} />
-            <MusicOutline onClick={handleMusicClick} />
-            <ProjectsOutline onClick={handleProjectsClick} />
-            <CatOutline onClick={handleCatClick} />
-          </div>
-        </div>
-        
-        <style jsx>{`
-          .portfolio-scaled-container {
-            /* Base design dimensions */
-            width: 1440px;
-            height: 1024px;
-            position: relative;
-            
-            /* Scale to FILL entire viewport (use max instead of min) */
-            transform: scale(max(calc(100vw / 1440), calc(100vh / 1024)));
-            transform-origin: center center;
-          }
-        `}</style>
-      </div>
-
-      {/* Interests Modal (Matcha) */}
-      <Dialog open={openModal === 'interests'} onOpenChange={(open) => !open && closeModal()}>
-        <DialogContent 
-          hideClose
-          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
-          style={{ 
-            borderColor: modalColor,
-            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <DialogTitle className="sr-only">Interests</DialogTitle>
-          <DialogDescription className="sr-only">View my interests and hobbies</DialogDescription>
-          <button
-            onClick={closeModal}
-            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
-            style={{ 
-              backgroundColor: `${modalColor}30`,
-              backdropFilter: 'blur(10px)',
-              color: modalColor,
-              border: `2px solid ${modalColor}`,
-              boxShadow: `0 0 20px ${modalColor}60`,
-            }}
-            aria-label="Close"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <div className="w-full h-full overflow-y-auto">
-            <InterestsPage onBack={closeModal} />
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Gallery Modal (Flower) */}
-      <Dialog open={openModal === 'gallery'} onOpenChange={(open) => !open && closeModal()}>
-        <DialogContent 
-          hideClose
-          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
-          style={{ 
-            borderColor: modalColor,
-            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <DialogTitle className="sr-only">Gallery</DialogTitle>
-          <DialogDescription className="sr-only">View my photo gallery</DialogDescription>
-          <button
-            onClick={closeModal}
-            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
-            style={{ 
-              backgroundColor: `${modalColor}30`,
-              backdropFilter: 'blur(10px)',
-              color: modalColor,
-              border: `2px solid ${modalColor}`,
-              boxShadow: `0 0 20px ${modalColor}60`,
-            }}
-            aria-label="Close"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <div className="w-full h-full overflow-y-auto">
-            <GalleryPage onBack={closeModal} />
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Music Modal */}
-      <Dialog open={openModal === 'music'} onOpenChange={(open) => !open && closeModal()}>
-        <DialogContent 
-          hideClose
-          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
-          style={{ 
-            borderColor: modalColor,
-            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <DialogTitle className="sr-only">Music</DialogTitle>
-          <DialogDescription className="sr-only">Explore my music collection and playlists</DialogDescription>
-          <button
-            onClick={closeModal}
-            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
-            style={{ 
-              backgroundColor: `${modalColor}30`,
-              backdropFilter: 'blur(10px)',
-              color: modalColor,
-              border: `2px solid ${modalColor}`,
-              boxShadow: `0 0 20px ${modalColor}60`,
-            }}
-            aria-label="Close"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <div className="w-full h-full overflow-y-auto">
-            <MusicPage onBack={closeModal} />
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Easter Egg Modal (Cat) */}
-      <Dialog open={openModal === 'easter-egg'} onOpenChange={(open) => !open && closeModal()}>
-        <DialogContent 
-          hideClose
-          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
-          style={{ 
-            borderColor: modalColor,
-            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <DialogTitle className="sr-only">Easter Egg</DialogTitle>
-          <DialogDescription className="sr-only">You found a hidden surprise!</DialogDescription>
-          <button
-            onClick={closeModal}
-            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
-            style={{ 
-              backgroundColor: `${modalColor}30`,
-              backdropFilter: 'blur(10px)',
-              color: modalColor,
-              border: `2px solid ${modalColor}`,
-              boxShadow: `0 0 20px ${modalColor}60`,
-            }}
-            aria-label="Close"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <div className="w-full h-full overflow-y-auto">
-            <EasterEggPage onBack={closeModal} />
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
   );
 }
