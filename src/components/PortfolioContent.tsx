@@ -240,5 +240,219 @@ export function PortfolioContent() {
         </div>
       </div>
     </div>
+    
+interface PortfolioContentProps {
+  onNavigate: (page: string, clickPosition: { x: number; y: number }, color: string) => void;
+}
+
+type ModalType = 'interests' | 'gallery' | 'music' | 'easter-egg' | null;
+
+export function PortfolioContent({ onNavigate }: PortfolioContentProps) {
+  const [openModal, setOpenModal] = useState<ModalType>(null);
+  const [modalColor, setModalColor] = useState<string>('#ffffff');
+
+  const handleNameClick = (e: React.MouseEvent) => {
+    onNavigate('about', { x: e.clientX, y: e.clientY }, '#ff6b6b');
+  };
+
+  const handleMatchaClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setModalColor('#6ddb6d');
+    setOpenModal('interests');
+  };
+
+  const handleFlowerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setModalColor('#ff69b4');
+    setOpenModal('gallery');
+  };
+
+  const handleMusicClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setModalColor('#4ecdc4');
+    setOpenModal('music');
+  };
+
+  const handleProjectsClick = (e: React.MouseEvent) => {
+    onNavigate('projects', { x: e.clientX, y: e.clientY }, '#7b68ee');
+  };
+
+  const handleCatClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setModalColor('#ffa500');
+    setOpenModal('easter-egg');
+  };
+
+  const closeModal = () => {
+    setOpenModal(null);
+  };
+
+  return (
+    <>
+      <div className="w-full h-full min-h-screen flex items-center justify-center">
+        {/* Full Page Interactive Portfolio - Scaled Container */}
+        <div className="portfolio-scaled-container">
+          <div className="bg-white relative size-full" data-name="Landing page">
+            <div className="absolute h-[1024px] left-0 top-0 w-[1440px]" data-name="Generated Image November 01, 2025 - 8_24PM 1">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <img alt="Portfolio Background" className="absolute inset-0 size-full object-cover" src={imgGeneratedImageNovember012025824Pm1} />
+              </div>
+            </div>
+            
+            <NameOutline onClick={handleNameClick} />
+            <MatchaOutline onClick={handleMatchaClick} />
+            <FlowerOutline onClick={handleFlowerClick} />
+            <MusicOutline onClick={handleMusicClick} />
+            <ProjectsOutline onClick={handleProjectsClick} />
+            <CatOutline onClick={handleCatClick} />
+          </div>
+        </div>
+        
+        <style jsx>{`
+          .portfolio-scaled-container {
+            /* Base design dimensions */
+            width: 1440px;
+            height: 1024px;
+            position: relative;
+            
+            /* Scale to FILL entire viewport (use max instead of min) */
+            transform: scale(max(calc(100vw / 1440), calc(100vh / 1024)));
+            transform-origin: center center;
+          }
+        `}</style>
+      </div>
+
+      {/* Interests Modal (Matcha) */}
+      <Dialog open={openModal === 'interests'} onOpenChange={(open) => !open && closeModal()}>
+        <DialogContent 
+          hideClose
+          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
+          style={{ 
+            borderColor: modalColor,
+            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <DialogTitle className="sr-only">Interests</DialogTitle>
+          <DialogDescription className="sr-only">View my interests and hobbies</DialogDescription>
+          <button
+            onClick={closeModal}
+            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
+            style={{ 
+              backgroundColor: `${modalColor}30`,
+              backdropFilter: 'blur(10px)',
+              color: modalColor,
+              border: `2px solid ${modalColor}`,
+              boxShadow: `0 0 20px ${modalColor}60`,
+            }}
+            aria-label="Close"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <div className="w-full h-full overflow-y-auto">
+            <InterestsPage onBack={closeModal} />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Gallery Modal (Flower) */}
+      <Dialog open={openModal === 'gallery'} onOpenChange={(open) => !open && closeModal()}>
+        <DialogContent 
+          hideClose
+          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
+          style={{ 
+            borderColor: modalColor,
+            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <DialogTitle className="sr-only">Gallery</DialogTitle>
+          <DialogDescription className="sr-only">View my photo gallery</DialogDescription>
+          <button
+            onClick={closeModal}
+            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
+            style={{ 
+              backgroundColor: `${modalColor}30`,
+              backdropFilter: 'blur(10px)',
+              color: modalColor,
+              border: `2px solid ${modalColor}`,
+              boxShadow: `0 0 20px ${modalColor}60`,
+            }}
+            aria-label="Close"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <div className="w-full h-full overflow-y-auto">
+            <GalleryPage onBack={closeModal} />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Music Modal */}
+      <Dialog open={openModal === 'music'} onOpenChange={(open) => !open && closeModal()}>
+        <DialogContent 
+          hideClose
+          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
+          style={{ 
+            borderColor: modalColor,
+            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <DialogTitle className="sr-only">Music</DialogTitle>
+          <DialogDescription className="sr-only">Explore my music collection and playlists</DialogDescription>
+          <button
+            onClick={closeModal}
+            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
+            style={{ 
+              backgroundColor: `${modalColor}30`,
+              backdropFilter: 'blur(10px)',
+              color: modalColor,
+              border: `2px solid ${modalColor}`,
+              boxShadow: `0 0 20px ${modalColor}60`,
+            }}
+            aria-label="Close"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <div className="w-full h-full overflow-y-auto">
+            <MusicPage onBack={closeModal} />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Easter Egg Modal (Cat) */}
+      <Dialog open={openModal === 'easter-egg'} onOpenChange={(open) => !open && closeModal()}>
+        <DialogContent 
+          hideClose
+          className="max-w-[95vw] w-[95vw] h-[90vh] overflow-hidden border-4 p-0"
+          style={{ 
+            borderColor: modalColor,
+            boxShadow: `0 0 60px ${modalColor}80, inset 0 0 60px ${modalColor}15`,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <DialogTitle className="sr-only">Easter Egg</DialogTitle>
+          <DialogDescription className="sr-only">You found a hidden surprise!</DialogDescription>
+          <button
+            onClick={closeModal}
+            className="absolute right-6 top-6 z-50 rounded-full p-2.5 transition-all hover:scale-110 hover:rotate-90"
+            style={{ 
+              backgroundColor: `${modalColor}30`,
+              backdropFilter: 'blur(10px)',
+              color: modalColor,
+              border: `2px solid ${modalColor}`,
+              boxShadow: `0 0 20px ${modalColor}60`,
+            }}
+            aria-label="Close"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <div className="w-full h-full overflow-y-auto">
+            <EasterEggPage onBack={closeModal} />
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
