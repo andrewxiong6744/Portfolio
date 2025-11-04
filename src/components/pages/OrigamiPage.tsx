@@ -2,11 +2,9 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/button';
 
-interface GalleryPageProps {
-  onBack: () => void;
-}
+interface OrigamiPageProps { onBack: () => void; }
 
-export function GalleryPage({ onBack }: GalleryPageProps) {
+export function OrigamiPage({ onBack }: OrigamiPageProps) {
   return (
     <div className="w-full h-full min-h-screen bg-gradient-to-br from-pink-50 to-fuchsia-100 p-8 overflow-auto">
       <div className="max-w-4xl mx-auto">
