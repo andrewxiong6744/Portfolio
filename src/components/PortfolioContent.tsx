@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import svgPaths from "../imports/svg-sofui92bd4";
 import bgImage from "../assets/Frame1.png"; // 1794 x 1024
-// ✅ Add this right after your imports
+
+// Let App pass navigation + transition info down to PortfolioContent
 interface PortfolioContentProps {
   onNavigate: (
     page: string,
@@ -178,40 +179,34 @@ function CatOutline({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
 }
 
 export function PortfolioContent({ onNavigate }: PortfolioContentProps) {
-  const handleNameClick = () => console.log("About");
-  const handleMatchaClick = () => console.log("Interests");
-  const handleFlowerClick = () => console.log("Gallery");
-  const handleMusicClick = () => console.log("Music");
-  const handleProjectsClick = () => console.log("Projects");
-  const handleCatClick = () => console.log("Meow!");
-// ✅ Add these inside PortfolioContent, before your return()
-const handleNameClick = (e: React.MouseEvent) => {
-  onNavigate('about', { x: e.clientX, y: e.clientY }, '#ff6b6b');
-};
+  // ✅ Only one set of handlers (no duplicates)
+  const handleNameClick = (e: React.MouseEvent) => {
+    onNavigate("about", { x: e.clientX, y: e.clientY }, "#ff6b6b");
+  };
 
-const handleMatchaClick = (e: React.MouseEvent) => {
-  e.stopPropagation();
-  onNavigate('interests', { x: e.clientX, y: e.clientY }, '#34d399');
-};
+  const handleMatchaClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onNavigate("interests", { x: e.clientX, y: e.clientY }, "#34d399");
+  };
 
-const handleFlowerClick = (e: React.MouseEvent) => {
-  e.stopPropagation();
-  onNavigate('gallery', { x: e.clientX, y: e.clientY }, '#f472b6');
-};
+  const handleFlowerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onNavigate("gallery", { x: e.clientX, y: e.clientY }, "#f472b6");
+  };
 
-const handleMusicClick = (e: React.MouseEvent) => {
-  e.stopPropagation();
-  onNavigate('music', { x: e.clientX, y: e.clientY }, '#4ecdc4');
-};
+  const handleMusicClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onNavigate("music", { x: e.clientX, y: e.clientY }, "#4ecdc4");
+  };
 
-const handleProjectsClick = (e: React.MouseEvent) => {
-  onNavigate('projects', { x: e.clientX, y: e.clientY }, '#7b68ee');
-};
+  const handleProjectsClick = (e: React.MouseEvent) => {
+    onNavigate("projects", { x: e.clientX, y: e.clientY }, "#7b68ee");
+  };
 
-const handleCatClick = (e: React.MouseEvent) => {
-  e.stopPropagation();
-  onNavigate('easter-egg', { x: e.clientX, y: e.clientY }, '#a78bfa');
-};
+  const handleCatClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onNavigate("easter-egg", { x: e.clientX, y: e.clientY }, "#a78bfa");
+  };
 
   return (
     // allow horizontal scroll if viewport < 1794
