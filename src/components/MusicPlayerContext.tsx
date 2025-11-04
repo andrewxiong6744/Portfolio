@@ -124,7 +124,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     isPlaying: false,
     currentTime: 0,
     duration: 0,
-    volume: 0.20, // 👈 default volume = 50%
+    volume: 0.20, // default volume = 20%
     isLooping: false,
     isShuffling: false,
     darkMode: false,
@@ -144,14 +144,12 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     if (!ambientRef.current) {
       const a = new Audio(AMBIENT_SRC);
       a.loop = true;
-      a.volume = 1; // quiet ambience
+      a.volume = 0.15; // quiet ambience
       ambientRef.current = a;
     }
-    ambientRef.current
-      .play()
-      .catch(() => {
-        // Autoplay blocked; will try again on next user gesture
-      });
+    ambientRef.current.play().catch(() => {
+      // Autoplay blocked; will try again on next user gesture
+    });
   }
 
   // Kick ambient off on first user interaction
@@ -201,28 +199,50 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
       }));
     };
 
-    const onEnded = () => {
-      if (state.isLooping) {
-        audio.currentTime = 0;
-        audio.play();
-      } else {
-        nextSong();
-      }
-    };
-
     audio.addEventListener("timeupdate", onTimeUpdate);
     audio.addEventListener("loadedmetadata", onLoaded);
-    audio.addEventListener("ended", onEnded);
 
     return () => {
       audio.pause();
       audio.src = "";
       audio.removeEventListener("timeupdate", onTimeUpdate);
       audio.removeEventListener("loadedmetadata", onLoaded);
-      audio.removeEventListener("ended", onEnded);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ---------- Rebind 'ended' to use fresh state (fixes always-jumping-to-track-2) ----------
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      if (state.isLooping) {
+        audio.currentTime = 0;
+        audio.play();
+        return;
+      }
+
+      const list = state.playlist;
+      const nextIndex = state.isShuffling
+        ? Math.floor(Math.random() * list.length)
+        : (currentSongIndex + 1) % list.length;
+
+      const next = list[nextIndex];
+
+      setCurrentSongIndex(nextIndex);
+      setState((prev) => ({
+        ...prev,
+        currentSong: next,
+        currentTime: 0,
+        dominantColor: next.primaryColor || "#6750A4",
+        accentColor: next.secondaryColor || "#E8DEF8",
+      }));
+    };
+
+    audio.addEventListener("ended", handleEnded);
+    return () => audio.removeEventListener("ended", handleEnded);
+  }, [currentSongIndex, state.isLooping, state.isShuffling, state.playlist]);
 
   // ---------- Load a new song ONLY when the source changes ----------
   useEffect(() => {
@@ -236,7 +256,7 @@ export function MusicPlayerProvider({ children }: { children: React.ReactNode })
     if (state.isPlaying) {
       audio.play().catch((err) => console.log("Audio playback failed:", err));
     }
-  }, [state.currentSong?.audioUrl]); // ✅ NOT dependent on isPlaying
+  }, [state.currentSong?.audioUrl]); // not dependent on isPlaying
 
   // ---------- Play/Pause without reloading the track ----------
   useEffect(() => {
