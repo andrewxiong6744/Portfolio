@@ -64,20 +64,8 @@ function AppContent() {
       />
 
       {/* Portfolio Content - Always visible as background */}
-      <div className="absolute inset-0 z-0">
-        <PageTransition 
-          pageKey={currentPage} 
-          transitionColor={transitionColor}
-          clickPosition={clickPosition}
-        >
-          {currentPage === 'home' && <PortfolioContent onNavigate={handleNavigate} />}
-          {currentPage === 'about' && <AboutPage onBack={handleBackToHome} />}
-          {currentPage === 'interests' && <InterestsPage onBack={handleBackToHome} />}
-          {currentPage === 'gallery' && <GalleryPage onBack={handleBackToHome} />}
-          {currentPage === 'music' && <MusicPage onBack={handleBackToHome} />}
-          {currentPage === 'projects' && <ProjectsPage onBack={handleBackToHome} />}
-          {currentPage === 'easter-egg' && <EasterEggPage onBack={handleBackToHome} />}
-        </PageTransition>
+      <div className="relative z-0">
+        <PortfolioContent />
       </div>
 
       {/* Music Player Container - Transitions from center to top-right */}
